@@ -1,0 +1,16 @@
+name: Build deb (rootless)
+on: [workflow_dispatch, push]
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Permisos de scripts
+        run: chmod 755 layout/DEBIAN/postinst layout/DEBIAN/postrm
+      - uses: Randomblock1/theos-action@v1
+      - name: Build
+        run: make package THEOS_PACKAGE_SCHEME=rootless FINALPACKAGE=1
+      - uses: actions/upload-artifact@v4
+        with:
+          name: PanelFotos-deb
+          path: packages/*.deb
