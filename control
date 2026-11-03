@@ -1,0 +1,9 @@
+Package: com.jc95.app
+Name: jc95
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: jc95 - panel de fotos con camara en vivo, chroma key y mas
+Maintainer: Tu Nombre
+Author: Tu Nombre
+Section: Utilities
+Depends: firmware (>= 15.0)

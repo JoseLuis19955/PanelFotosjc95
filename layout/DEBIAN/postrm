@@ -1,0 +1,6 @@
+#!/bin/sh
+export PATH=/var/jb/usr/bin:/var/jb/bin:/var/jb/usr/sbin:$PATH
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+  uicache -u /var/jb/Applications/jc95.app 2>/dev/null || true
+fi
+exit 0

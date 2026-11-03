@@ -1,0 +1,4 @@
+#!/bin/sh
+export PATH=/var/jb/usr/bin:/var/jb/bin:/var/jb/usr/sbin:$PATH
+uicache -p /var/jb/Applications/jc95.app 2>/dev/null || true
+exit 0

@@ -1,0 +1,56 @@
+PANEL FOTOS v2 - app nativa para Dopamine (rootless)
+
+NOVEDADES DE ESTA VERSION
+- Panel "Controles" arriba (como la captura de referencia):
+  * Zoom +/-, flechas para mover el panel, boton central para centrar
+  * Icono de exportar: guarda una captura del panel en Fotos
+  * Color de Fondo: elige el color del lienzo
+  * Movimiento En Vivo: activa la camara FRONTAL en vivo
+  * Luz de Pantalla: pone la pantalla en blanco a brillo maximo (luz de relleno)
+  * Chroma Key: quita el verde o azul de la camara en vivo para que se vea
+    el panel de fotos detras (activa Movimiento En Vivo primero)
+  * Bloquear Panel (Guardar Config): evita mover/pellizcar fotos por accidente
+- Menu (abajo): agregar foto de galeria, tomar foto con camara, borrar, centrar
+- Filtros (abajo): Normal, Sepia, Blanco y Negro, Invertido, Vivido
+- Las fotos se siguen pudiendo mover/rotar/zoom con los dedos como antes
+
+PERMISOS
+La primera vez que uses "Movimiento En Vivo", "Tomar foto" o "Agregar foto de
+galeria" o "Exportar", iOS pedira permiso de Camara / Fotos. Acepta para que
+funcione. En apps de jailbreak a veces este dialogo no aparece: si una funcion
+no responde, revisa Ajustes > Privacidad > Camara/Fotos y activa Panel Fotos
+manualmente.
+
+RENDIMIENTO
+El Chroma Key procesa video cuadro por cuadro con Core Image. En un iPhone 8
+Plus deberia funcionar pero puede ir mas lento o calentar el telefono. Si se
+ve muy lento, desactiva el Chroma Key y deja solo Movimiento En Vivo.
+
+COMPILAR (Mac o Linux con Theos instalado):
+  cd PanelFotos
+  make package THEOS_PACKAGE_SCHEME=rootless FINALPACKAGE=1
+  -> el .deb queda en la carpeta packages/
+
+SIN MAC (GitHub Actions):
+  1. Sube TODO el contenido de esta carpeta (incluida .github) a un
+     repositorio de GitHub.
+  2. Ve a Actions > "Build deb (rootless)" > Run workflow.
+  3. Cuando salga en verde, descarga el artefacto PanelFotos-deb.
+
+INSTALAR en el iPhone:
+  - Pasa el .deb al iPhone (Filza / AirDrop / correo) y abrelo con Sileo o
+    Zebra, o por SSH: dpkg -i com.panelfotos.app_1.0.0_iphoneos-arm64.deb
+  - Si no aparece el icono: uicache -a (o Reiniciar SpringBoard en Dopamine)
+
+CAMBIOS EN ESTA VERSION (jc95)
+- La app ahora se llama "jc95" (bundle, icono y nombre visible) con un
+  logo generado a juego con los colores del panel.
+- Cambie los entitlements: quite "no-sandbox" (puede causar que el sistema
+  mate la app al abrir en algunos jailbreaks rootless como Dopamine) y use
+  en su lugar "no-container" + "skip-library-validation", mas comunes en
+  apps rootless para Dopamine/roothide.
+- Si con este cambio la app TODAVIA se cierra al abrir, el siguiente paso
+  es conseguir el log de crash (Ajustes > Privacidad y seguridad >
+  Analisis y mejoras > Datos de analisis, buscar "jc95-fecha...", o con
+  Filza en /var/mobile/Library/Logs/CrashReporter/) y compartir el texto
+  completo para ubicar la linea exacta que falla.
